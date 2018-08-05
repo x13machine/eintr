@@ -1,0 +1,6 @@
+User-Agent: *
+Disallow: 
+Disallow: /auth/google
+
+User-Agent: Googlebot-Image
+Disallow: /

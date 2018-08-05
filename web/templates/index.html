@@ -1,0 +1,48 @@
+<p>
+	Currently in testing, if you have any problems just email me at admin@eintr.news. I don't own any of the articles or images below. Currently contacting news sources for premission to use their feeds.
+</p>
+
+{{#if search}}
+	<p id='searchText'>
+		Articles relating to "{{search}}"
+	</p>
+{{/if}}
+<div id='menu'>	
+	<span id='types'>
+		<span id='news' class='types{{#ifCond type "==" "news"}} type{{/ifCond}}'>News</span>
+		<span id='factcheck' class='types{{#ifCond type "==" "factcheck"}} type{{/ifCond}}'>Fact Check</span>
+	</span>
+	
+	{{#ifCond sort "!=" "search"}}
+	<select id='sort'>
+		<option value="latest"{{#ifCond sort "==" "latest"}} selected{{/ifCond}}>Latest</option>
+		<option value="trending"{{#ifCond sort "==" "trending"}} selected{{/ifCond}}>Trending</option>
+	</select>
+	{{/ifCond}}
+</div>
+
+<div id='articles'>
+	{{#each articles}}
+
+		<table class='articles' title='{{date}}'>
+			<tr>
+				<td>
+					<div class='vote{{#ifCond vote "==" "up"}} mark{{/ifCond}}' article='{{id}}' vote='up'>&#9650;</div>
+					<div class='percent' article='{{id}}'>{{percent}}%</div>
+					<div class='vote{{#ifCond vote "==" "down"}} mark{{/ifCond}}' article='{{id}}' vote='down'>&#9660;</div>
+				</td>
+				<td>
+					<h3 class='headline'><a href='{{link}}' target='_blank'>{{title}}</a></h3>
+					<p class='source'>Source: <a href='{{site}}' target='_blank'>{{source}}</a></p>
+					{{#if image}}
+					<div class='thumbnail'>
+						<img src='/thumbnail/{{image}}.jpg'>
+					</div>
+					{{/if}}
+					<p class='summary'>{{summary}}</p>
+				</td>
+			</tr>
+		</table>
+		
+	{{/each}}
+</div>

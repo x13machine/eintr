@@ -1,0 +1,28 @@
+{
+	"delay": 5000,
+	"interval": 600,
+	"coinInterval": 300,
+	"override":{
+		"pro": {
+			"redis": "redis://172.17.0.1/2",
+			"pg":{
+				"host": "172.17.0.1",
+				"user" : "eintr",
+				"password": "",
+				"database": "eintr"
+			},
+			"save":"/data/thumbnail",
+			"coins": "/data/coins"
+		}
+	},
+	"pg":{
+		"user" : "postgres",
+		"password": "pass",
+		"database": "eintr"
+	},
+	"size": 128,
+	"stackCount": 10,
+	"save":"../web/public/thumbnail",
+	"coins": "../web/public/coins",
+	"redis": "redis://localhost/2"
+}

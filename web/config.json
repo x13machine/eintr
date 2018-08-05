@@ -1,0 +1,60 @@
+{
+	"port": 5555,
+	"pageSize": 15,
+	"override":{
+		"pro":{
+			"google":{
+				"clientSecret": "",
+				"clientID":"",
+				"callbackURL": ""
+			},
+			"redis": "redis://172.17.0.1/2",
+			"pg":{
+				"host": "172.17.0.1",
+				"user" : "eintr",
+				"password": "",
+				"database": "eintr"
+			}
+		}
+	},
+	"google":{
+		"clientSecret": "",
+		"clientID":"",
+		"callbackURL": "/auth/google/callback"
+	},
+	"pg":{
+		"host": "localhost",
+		"user" : "postgres",
+		"password": "pass",
+		"database": "eintr"
+	},
+	"media":{
+		"index":{
+			"css":[],
+			"js":[
+				"news"
+			]
+		},
+		"about":{
+			"css":[],
+			"js":[]
+		},
+		"none":{
+			"css":[],
+			"js":[]
+		},
+		"layout":{
+			"css":[
+				"layout"
+			],
+			"js":[]
+		}
+	},
+	"secret": "",
+	"expire" : 604800,
+	"redis": "redis://localhost/2",
+	"searchThreshold": 0.3,
+	"articleUpdate": 60000,
+	"sourceUpdate": 5000,
+	"maxArticles": 2000
+}

@@ -1,0 +1,19 @@
+{
+	
+	"slug0":{
+		"name": "name",
+		"type": "factcheck",
+		"rss": [
+			"http://www.factcheck-site.com/rss"
+		]
+	},
+	
+	"slug1":{
+		"name": "name",
+		"type": "news",
+		"rss" : [
+			"http://www.news-site.com/feed"
+		],
+		"noimg": true
+	}
+}

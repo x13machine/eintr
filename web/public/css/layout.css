@@ -1,0 +1,354 @@
+body, html{
+	padding: 0;
+	margin: 0;
+	background: #222;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #AAA;
+}
+
+a{
+	color: #999999;
+}
+
+a:hover{
+	color: #808080;
+}
+
+/* header */
+
+#title{
+	margin: 0;
+	padding: 10pt;
+	color: #CCC;
+	background: rgba(0, 0, 255, 0.1);
+}
+
+#title p{
+	color: #FFF;
+	font-weight: bold;
+	background: #000;
+    display: inline;
+}
+
+#title>*{
+	margin: 0;
+	padding: 0;
+}
+
+#header{
+	background: url(/imgs/header.svg);
+	background-size: 100% 100%;
+	background-position: center;
+}
+
+#nav {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background: rgba(0, 0, 0, 0.3);
+	border-top: solid 1px #000; 
+}
+
+#nav li{
+	float: left;
+}
+
+.links{
+	display: block;
+	color: #FFF;
+	text-align: center;
+	padding: 10pt 14pt;
+	text-decoration: none;
+}
+
+#nav li a:hover {
+	background: rgba(0,0,255,0.25);
+}
+
+#login{
+	position:absolute;
+	top: 0px;
+	right: 0px;
+	background: rgba(0,0,0,0.5);
+	text-align: right;
+	color: #CCC;
+	padding: 5pt;
+	border: #000 solid 1px;
+}
+
+#login a{
+	color: #D00;
+}
+
+/* body / content */
+
+#ad{
+	margin: auto;
+	background: #000;
+	width: 728px;
+	height: 90px;
+}
+
+#select{
+	color: #006FFF !important;
+}
+
+#body{
+	float: right;
+	width: 100%;
+}
+
+#body>div{
+	float: left;
+}
+
+#content{
+	margin: 5pt;
+	width: calc(100% - 10pt - 10pt - 300pt);
+}
+
+.sidebarLink{
+	display: none;
+}
+
+@media (max-width:700pt) {
+	#header{
+		background: none;
+	}
+	
+	#sidebar{
+		display:none
+	}
+	
+	#content{
+		width: calc(100% - 10pt);
+	}
+	
+	.expand-sidebar{
+		width: 0 !important;
+	}
+
+	.sidebarLink{
+		display: block !important;
+	}
+}
+
+
+
+/* sidebar */
+
+.expand-sidebar{
+	width: 100% !important;
+	margin: 0 !important;
+	display: block !important;
+}
+
+#searchInput{
+	background: rgba(0,0,0,0.5);
+	color: #FFF;
+	border: solid 1px #000;
+	width: calc(100% - 3em);
+	padding: 4px;
+	font-size: 1em;
+}
+
+#searchButton{
+	background: url(/imgs/search.svg);
+	background-size: 100% 100%;
+	cursor: pointer;
+	border: 0;
+	padding: 1em;
+}
+
+#sidebar{
+	margin: 5pt;
+	width: 300pt;
+}
+
+#sidebar ul{
+	padding-left: 2em;
+	margin: 0;
+}
+
+#sidebar li{
+	padding: 2.5pt;
+
+}
+
+#sidebar li a,#sidebar > a{
+	color: #006FFF;
+}
+
+#sidebar li a:hover{
+	color: #0059CC;
+}
+
+#sidebar h2{
+	color: #8A8A8A;
+	margin: 0;
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+}
+
+#sidebar h2 a{
+	text-decoration: none;
+}
+
+#sidebar hr{
+	border: 0;
+	border-top: 1px solid #444;
+}
+
+/* coins */
+
+#coins{
+	font-family: monospace;
+	width: 100%;
+	font-size: 10.5pt;
+}
+
+#coins td, #coins th{  
+	text-align: right;
+}
+
+#coins th:nth-child(3), #coins td:nth-child(3){  
+	white-space: pre;
+	text-align: right;
+}
+
+#coins th:nth-child(1), #coins td:nth-child(1){  
+	text-align: left;
+}
+
+.coin-icon{
+	width: 1em;
+}
+
+/* content */
+
+.sources{
+	color: #F00;
+}
+
+/* menu */
+
+#sort{
+	float: right;
+	width: 5.5em;
+	padding: 0;
+	margin: 0;
+}
+
+.types{
+	font-weight: bold;
+	color: #BBB;
+	margin: 3pt;
+	font-size: 15pt;
+	cursor:pointer;
+}
+
+.type{
+	color: #FFF;
+	border-bottom: #F00 solid 3pt;
+}
+
+#menu{
+	margin: 5pt;
+}
+
+
+#searchText{
+	color: #DDD;
+	background: rgba(0,255,0,0.25);
+	padding: 7pt;
+	border-radius: 4pt;
+}
+
+/* articles */
+
+.articles:nth-child(1) {
+	border-top: 1px solid #444;
+}
+
+.articles{
+	width: calc(100%);
+	height: 5em;
+	border-bottom: 1px solid #333;
+}
+
+.articles tr{
+	width: 100%;
+}
+
+.articles td{
+	border-radius: 7pt;
+	color: #666666;
+	padding: 3pt;
+}
+
+.articles td *{
+	margin: 0;
+	padding: 0;
+}
+
+.vote{
+	color: #777;
+	font-size: 1.5em;
+	cursor:pointer;
+}
+
+.percent{
+	color: #DDD;
+}
+.vote:hover{
+	color: #FF4B00;
+}
+
+h2,h3 a,h3{
+	color: #0068EB;
+}
+
+.headline a{
+	font-size: 1.1em;
+}
+.headline a:hover{
+	color: #005BCE;
+}
+
+.summary{
+	color: #c0c1c2;
+
+}
+
+.articles a{
+	text-decoration: none;
+}
+
+.articles td:nth-child(1) {  
+	width: 3em;
+	text-align: center;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.mark{
+	color: #0A42F8 !important;
+}
+
+.articles td:nth-child(2) div{  
+	float: left;
+}
+
+.thumbnail img{
+	max-width: 80pt;
+	max-height: 80pt;
+}
+
+.thumbnail{
+	padding-right: 5pt !important;
+}

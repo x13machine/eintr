@@ -1,0 +1,17 @@
+{
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"handlebars": "4.0.6",
+		"fsmonitor": "0.2.4",
+		"html-to-text": "3.3.0",
+		"express": "4.14.x",
+		"pg": "6.2.x",
+		"express-session": "1.15.3",
+		"connect-redis" : "3.2.0",
+		"redis": "2.7.x",
+		"passport": "0.3.2",
+		"passport-google-oauth": "1.0.0"
+	}
+}
