@@ -7,19 +7,15 @@ global.unfluff = require('unfluff');
 global.getUrls = require('get-urls');
 
 global.stack = new (require('stackexchange-node'))({site:'skeptics'});
-global.request = require("request");
-global.redisLib = require("redis");
+global.request = require('request');
+global.redisLib = require('redis');
 
 
 global.config = cj.parse(fs.readFileSync('config.json'), null, true);
 global.sources = cj.parse(fs.readFileSync('sources.json'), null, true);
 
-if(process.env.config){
-	var ec = config.override[process.env.config];
-	for(var i in ec){
-		config[i] = ec[i];
-	}
-}
+if(process.env.override)config = Object.assign(JSON.parse(process.env.override), config);
+if(process.env.config)config = Object.assign(config.override[process.env.config], config);
 
 global.pg = require('pg');
 global.sql = new pg.Pool(config.pg);
@@ -30,17 +26,6 @@ require('./functions.js');
 require('./articles.js');
 require('./stack.js');
 require('./coins.js');
-
-function apnews(item){
-	var urls = Array.from(getUrls(item.description));
-	for(var i in urls){
-		var url = urls[i];
-		var test = 'http://analytics.apnewsregistry.com/analytics/V2/Image.svc/AP/E/prod/PC/Basic/RWS/hosted2.ap.org/CAI/'
-		if(url.substr(0,test.length) == test){
-			return 'https://apnews.com/' + url.split('/')[14] + '/' + item.title.Replace(' ','-');
-		}
-	}
-}
 
 for(var slug in sources){
 	var source = sources[slug];
@@ -85,11 +70,6 @@ for(var slug in sources){
 					if(!item.guid){
 						return;
 					}
-					/*
-					if(slug == 'apnews'){
-						item.link = apnews(item) || item.link;
-						item.guid = item.link;
-					}*/
 					
 					var id = crypto.createHash('sha256').update(source.question ? item.guid.split('?')[0] : item.guid, 'utf8').digest('base64');
 					if(!item.title || !item.description){

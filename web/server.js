@@ -1,13 +1,11 @@
 global.crypto = require('crypto');
 global.fsmonitor = require('fsmonitor');
 global.fs = require('fs');
-global.config = JSON.parse(fs.readFileSync('config.json'));
-if(process.env.config){
-	var ec = config.override[process.env.config];
-	for(var i in ec){
-		config[i] = ec[i];
-	}
-}
+global.config = require('./config.json');
+
+if(process.env.override)config = Object.assign(config,JSON.parse(process.env.override));
+if(process.env.config)config = Object.assign(config,config.override[process.env.config]);
+
 
 process.env.NODE_ENV = 'production';
 

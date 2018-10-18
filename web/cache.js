@@ -12,6 +12,7 @@ function cache(){
 	];
 	
 	directories.forEach(function(dir){
+		dir = __dirname + '/' + dir
 		var files = fs.readdirSync(dir);
 		files.forEach(function(file){
 				var content = fs.readFileSync(dir + '/' + file,'utf8')
@@ -29,7 +30,7 @@ function cache(){
 }
 
 cache();
-fsmonitor.watch('public/', null, cache);
+fsmonitor.watch(__dirname + '/public/', null, cache);
 
 app.get('/cache/*', function(req, res, next){
 	var data = hashes[req.url.split('/')[2]];

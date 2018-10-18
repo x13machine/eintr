@@ -1,5 +1,5 @@
 global.sidebarHTML = '';
-var dir = 'templates/';
+var dir = __dirname + '/templates/';
 
 global.templates = {
 	'none': function(){}
