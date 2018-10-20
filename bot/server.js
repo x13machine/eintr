@@ -20,6 +20,7 @@ if(process.env.config)config = Object.assign(config.override[process.env.config]
 global.pg = require('pg');
 global.sql = new pg.Pool(config.pg);
 
+console.log(config.redis)
 global.redis = redisLib.createClient(config.redis);
 
 require('./functions.js');
@@ -69,7 +70,7 @@ for(var slug in sources){
 				items.forEach(function(item,i){
 					if(!item.guid){
 						return;
-					}
+				
 					
 					var id = crypto.createHash('sha256').update(source.question ? item.guid.split('?')[0] : item.guid, 'utf8').digest('base64');
 					if(!item.title || !item.description){
