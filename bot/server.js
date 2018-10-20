@@ -20,7 +20,7 @@ if(process.env.config)config = Object.assign(config.override[process.env.config]
 global.pg = require('pg');
 global.sql = new pg.Pool(config.pg);
 
-console.log(config.redis);
+console.log(process.env.override);
 global.redis = redisLib.createClient(config.redis);
 
 require('./functions.js');
