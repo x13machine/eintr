@@ -14,8 +14,8 @@ global.redisLib = require('redis');
 global.config = require('./config.json')
 global.sources = require('./sources.json')
 
-if(process.env.override)config = Object.assign(JSON.parse(process.env.override), config);
-if(process.env.config)config = Object.assign(config.override[process.env.config], config);
+if(process.env.override)config = Object.assign(config, JSON.parse(process.env.override));
+if(process.env.config)config = Object.assign(config, config.override[process.env.config]);
 
 global.pg = require('pg');
 global.sql = new pg.Pool(config.pg);
