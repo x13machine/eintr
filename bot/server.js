@@ -11,8 +11,8 @@ global.request = require('request');
 global.redisLib = require('redis');
 
 
-global.config = cj.parse(fs.readFileSync('config.json'), null, true);
-global.sources = cj.parse(fs.readFileSync('sources.json'), null, true);
+global.config = require('./config.json')
+global.sources = require('./sources.json')
 
 if(process.env.override)config = Object.assign(JSON.parse(process.env.override), config);
 if(process.env.config)config = Object.assign(config.override[process.env.config], config);

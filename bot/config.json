@@ -22,7 +22,7 @@
 	},
 	"size": 128,
 	"stackCount": 10,
-	"save":"../web/public/thumbnail",
-	"coins": "../web/public/coins",
+	"save":"web/public/thumbnail",
+	"coins": "web/public/coins",
 	"redis": "redis://localhost/2"
 }

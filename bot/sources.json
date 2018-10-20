@@ -1,19 +1,24 @@
 {
 	
-	"slug0":{
-		"name": "name",
-		"type": "factcheck",
+	"usatoday":{
+		"name": "Usa Today",
+		"type": "news",
 		"rss": [
-			"http://www.factcheck-site.com/rss"
+			"http://rssfeeds.usatoday.com/usatoday-NewsTopStories"
 		]
 	},
-	
-	"slug1":{
-		"name": "name",
+	"sciencedaily":{
+		"name": "Science Daily",
 		"type": "news",
 		"rss" : [
-			"http://www.news-site.com/feed"
-		],
-		"noimg": true
+			"https://www.sciencedaily.com/rss/all.xml"
+		]
+	},
+	"factcheck":{
+		"name": "Fact Check",
+		"type": "factcheck",
+		"rss": [
+			"https://www.factcheck.org/feed/"
+		]
 	}
 }
