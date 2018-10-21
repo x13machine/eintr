@@ -1,25 +1,42 @@
+const rp = require('request-promise');
+
+const requestOptions = {
+	method: 'GET',
+	uri: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest',
+	qs: {
+		start: 1,
+		limit: 10,
+		convert: 'USD'
+	},
+	headers: {
+		'X-CMC_PRO_API_KEY': config.cmcAPI
+	},
+	json: true,
+	gzip: true
+};
+
+
 function gra(){
-	getJson('https://api.coinmarketcap.com/v1/ticker/',function(coins,err){
-		setTimeout(gra,config.coinInterval * 1000);
-		if(!coins)return ;
-		coins = coins.filter(function(coin){
-			return 1 <= coin.price_usd
-		});
-		
-		coins = coins.splice(0, 10);
+	rp(requestOptions).then(res => {
+		setTimeout(gra,config.coinInterval * 1000);		
 		
 		var info = [];
 		var download = [];
-		coins.forEach(function(coin){
-			download.push(coin.id);
+		var downloadID = {};
+		var info = [];
+		
+		res.data.forEach(coin => {
+			download.push(coin.slug);
+			downloadID[coin.slug] = coin.id;
+			
 			info.push({
+				id: coin.slug,
 				name: coin.name,
-				price: coin.price_usd,
-				change: coin.percent_change_24h * 1, 
-				id: coin.id.Replace('.','')
+				change: coin.quote.USD.percent_change_24h,
+				price: coin.quote.USD.price
 			});
 		});
-		
+
 		redis.set('coins', JSON.stringify(info));
 		
 		fs.readdir(config.coins, function(err, files) {
@@ -33,7 +50,8 @@ function gra(){
 			if(download.length !== 0){
 				
 				download.forEach(function(dat){
-					jimp.read('https://files.coinmarketcap.com/static/img/coins/32x32/' + dat + '.png', function (err, image) {
+					jimp.read('https://s2.coinmarketcap.com/static/img/coins/16x16/' + downloadID[dat] + '.png', function (err, image) {
+
 						if(err || !image)return;
 						try{
 							image.resize(16, 16).write(config.coins + '/' + dat + '.png');
@@ -42,7 +60,10 @@ function gra(){
 				});
 			}
 		});
+	}).catch((err) =>{
+		console.log(err)
 	});
+	setTimeout(gra,config.coinInterval * 1000);
 }
 
 gra();
