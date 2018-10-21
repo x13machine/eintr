@@ -18,7 +18,6 @@ const requestOptions = {
 
 function gra(){
 	rp(requestOptions).then(res => {
-		setTimeout(gra,config.coinInterval * 1000);		
 		
 		var info = [];
 		var download = [];
@@ -32,7 +31,7 @@ function gra(){
 			info.push({
 				id: coin.slug,
 				name: coin.name,
-				change: coin.quote.USD.percent_change_24h,
+				change: coin.quote.USD.percent_change_24h.toFixed(2),
 				price: coin.quote.USD.price
 			});
 		});
@@ -61,7 +60,7 @@ function gra(){
 			}
 		});
 	}).catch((err) =>{
-		console.log(err)
+		console.log(err,'err');
 	});
 	setTimeout(gra,config.coinInterval * 1000);
 }
