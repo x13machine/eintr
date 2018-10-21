@@ -7,6 +7,7 @@ if(process.env.override)config = Object.assign(config,JSON.parse(process.env.ove
 if(process.env.config)config = Object.assign(config,config.override[process.env.config]);
 
 
+console.log(__dirname)
 process.env.NODE_ENV = 'production';
 
 global.htmlToText = require('html-to-text');
