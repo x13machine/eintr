@@ -1,10 +1,20 @@
 # Eintr News Aggregator
-Source Code for the a news aggregator I made a year ago.  I couldn't figure out a business plan for it. I might use the code for a later project. The rss reader might be buggy. You can only use it for non-commercial purposes only.
+Source Code for the a news aggregator I made a year ago. The rss reader might be buggy.
 
-## Install (probably, I'm going off my memory)
-* First, You need to install redis,solr, postgresql.
-* Next run npm install for bot and the web code.
-* Add sources in the "sources" postgresql table and to the bot/sources.json file
-* Add oath2 google settings in the web/config.json file
+## Install
+* First, You need to install redis, postgres.
+* Run "npm install"
+* Copy override-clone.json to override.json
+* Import the eintr.sql file to your portgres server.
+* Add sources in the "sources" postgres table and to the bot/sources.json file
+* Add get google oath2 credentials and add them to override.json.
+* Add get an api key from coinmarketcap.com and add it to override.json.
+* Add Redis and Postgres config to override.json
 
-**FYI: Unfortunately I don't have the solr files. Probably wouldn't be too hard to recreate.**
+## Run
+
+### Bot
+    mode=bot override="$(cat override.json)" node start.js
+    
+### Web
+    mode=web override="$(cat override.json)" node start.js

@@ -1,0 +1,18 @@
+{
+	"google":{
+		"clientSecret" : "",
+		"clientID": "",
+		"callbackURL": ""
+	},
+	"redis": "redis://127.0.0.1/5",
+	"pg":{
+		"host": "127.0.0.1",
+		"user" : "postgres",
+		"password": "pass",
+		"database": "eintr"
+	},
+	"cmcAPI": "coinmarketcap.com api key",
+	"secret": "some random text",
+	"save": "",
+	"coins": ""
+}
