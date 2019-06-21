@@ -8,7 +8,7 @@ function insert(article, image){
 		article.title,
 		article.description,
 		article.content
-	],function(err,res){
+	],function(err){
 		console.log(err,article.link);
 	});	
 }
@@ -36,7 +36,7 @@ global.getArticle = function(articles,index,callback){
 		var sha = crypto.createHash('sha256').update(article.image).digest('base64');
 		sql.query('SELECT "ID" FROM "articles" WHERE "url" = $1::text',[sha],function(err ,res){
 			if(res.rows.length === 1){
-				callback(row.ID)
+				callback(row.ID);
 				return ;
 			}
 			
@@ -47,7 +47,7 @@ global.getArticle = function(articles,index,callback){
 						return;
 					}
 					
-					var img = image.scaleToFit(config.size , config.size).quality(100)
+					var img = image.scaleToFit(config.size , config.size).quality(100);
 					img.getBuffer('image/jpeg', function(err,buff){
 						var hash = crypto.createHash('sha256').update(buff).digest('base64');
 						sql.query('SELECT "ID" FROM "images" WHERE "hash" = $1::text',[
@@ -60,7 +60,7 @@ global.getArticle = function(articles,index,callback){
 							}
 							
 							if(res.rows[0]){
-								callback(res.rows[0].ID)
+								callback(res.rows[0].ID);
 								return ;
 							}
 							
@@ -70,7 +70,7 @@ global.getArticle = function(articles,index,callback){
 							],function(err,res){
 								if(err || !res.rows[0]){
 									//console.log(err)
-									callback(null)
+									callback(null);
 									return ;
 								}
 								var id = res.rows[0].ID;
@@ -104,4 +104,4 @@ global.getArticle = function(articles,index,callback){
 	});
 	
 
-}
+};

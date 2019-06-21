@@ -1,19 +1,19 @@
-var sidebar = {}
+var sidebar = {};
 function addZeroes( num ) {
-	var num = num.toString();
-    var value = Number(num);
-    var res = num.toString().split(".");
-    if(num.indexOf('.') === -1) {
-        value = value.toFixed(2);
-        num = value.toString();
-    } else if (res[1].length < 3) {
-        value = value.toFixed(2);
-        num = value.toString();
-    }
-return num
+	num = num.toString();
+	var value = Number(num);
+	var res = num.toString().split('.');
+	if(num.indexOf('.') === -1) {
+		value = value.toFixed(2);
+		num = value.toString();
+	} else if (res[1].length < 3) {
+		value = value.toFixed(2);
+		num = value.toString();
+	}
+	return num;
 }
 function build(){
-	global.sidebarHTML = templates.sidebar(sidebar)
+	global.sidebarHTML = templates.sidebar(sidebar);
 }
 
 function getData(){
@@ -31,7 +31,7 @@ function getData(){
 		var coins = JSON.parse(data || '[]');
 		var max = 0;
 		coins.forEach(function(coin,i){
-			coins[i].price = '$' + comma(addZeroes(round(coin.price)))
+			coins[i].price = '$' + comma(addZeroes(round(coin.price)));
 			if(0 < coin.change){
 				coins[i].icon = '\u25B2 ';
 				coins[i].change = addZeroes(coin.change) + '%';

@@ -12,19 +12,19 @@ function cache(){
 	];
 	
 	directories.forEach(function(dir){
-		dir = __dirname + '/' + dir
+		dir = __dirname + '/' + dir;
 		var files = fs.readdirSync(dir);
 		files.forEach(function(file){
-				var content = fs.readFileSync(dir + '/' + file,'utf8')
-				var type = file.split('.')[1];
+			var content = fs.readFileSync(dir + '/' + file,'utf8');
+			var type = file.split('.')[1];
 				
 				
-				var id = base(crypto.createHash('md5').update(content, 'utf8').digest('base64')) + '.' + type;
-				lookups[file] = id;
-				hashes[id] = {
-					type: express.static.mime.lookup(type),
-					content: content
-				}
+			var id = base(crypto.createHash('md5').update(content, 'utf8').digest('base64')) + '.' + type;
+			lookups[file] = id;
+			hashes[id] = {
+				type: express.static.mime.lookup(type),
+				content: content
+			};
 		});
 	});
 }

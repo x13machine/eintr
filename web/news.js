@@ -22,12 +22,12 @@ getSources();
 var cats = [
 	'news',
 	'factcheck'
-]
+];
 
 var sorts = {
 	'latest': '"articles"."published"',
 	'trending': '(SELECT POWER((SELECT COUNT(*) FROM "votes" WHERE "vote" = true AND "articles"."ID" = "votes"."article") + 2, coalesce(avg("vote"::int),0.5)) FROM "votes" WHERE "article" = "articles"."ID") / (extract(\'epoch\' from CURRENT_TIMESTAMP)::bigint - "published")'
-}
+};
 
 var arts = {};
 var artsID = {};
@@ -39,7 +39,7 @@ function grabArticles(cat,sort){
 		config.maxArticles,
 	], function (err, res) {
 		if(err){
-			console.log(err)
+			console.log(err);
 			return ;
 		}
 		
@@ -59,7 +59,7 @@ function grabArticles(cat,sort){
 				date: new Date(row.published * 1000),
 				percent: Math.round(row.percent * 100),
 				summary: summary(decodeHTML(row.description),512)
-			}
+			};
 			
 			lo[row.ID] = meta;
 			articles.push(meta);
@@ -144,7 +144,7 @@ global.getNews = function(options, callback){
 			callback(articles,options);
 		});
 	}
-}
+};
 
 
 global.searchNews = function(options, callback){
@@ -157,7 +157,7 @@ global.searchNews = function(options, callback){
 		options.page * config.pageSize
 	], function (err,res){
 		if(err){
-			console.log(err)
+			console.log(err);
 			callback(null, []);
 			return ;
 		}
@@ -175,7 +175,7 @@ global.searchNews = function(options, callback){
 				date: new Date(row.published * 1000),
 				percent: Math.round(row.percent * 100),
 				summary: summary(decodeHTML(row.description),512)
-			}
+			};
 			
 			articles.push(meta);
 		});
@@ -183,4 +183,4 @@ global.searchNews = function(options, callback){
 		callback(null, articles);
 	});
 		
-}
+};

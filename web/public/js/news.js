@@ -18,8 +18,8 @@ function decodeJson(str){
 function getJsonFromUrl() {
 	var query = location.search.substr(1);
 	var result = {};
-	query.split("&").forEach(function(part) {
-		var item = part.split("=");
+	query.split('&').forEach(function(part) {
+		var item = part.split('=');
 		result[item[0]] = decodeURIComponent(item[1]).replace(/\++/g, ' ');
 	});
 	return result;
@@ -41,15 +41,15 @@ function getJson(action,obj,callback) {
 		if(this.readyState != XMLHttpRequest.DONE)return ;
 		this.params = params;
 		(callback || function(){})(decodeJson(this.responseText),this);
-	}
+	};
 	
-	xhttp.open("GET", '/ajax/' + action + '?' + params, true);
+	xhttp.open('GET', '/ajax/' + action + '?' + params, true);
 	xhttp.send();
 }
 
 String.prototype.encodeHTML = function () {
 	return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-}
+};
 
 function createChild(parent,tag){
 	var child = document.createElement(tag);
@@ -58,16 +58,16 @@ function createChild(parent,tag){
 }
 
 function $(code){
-	var select=code.slice(1,code.length);
+	var select = code.slice(1,code.length);
 	switch(code[0]){
-		case '.':
-			return document.getElementsByClassName(select);
+	case '.':
+		return document.getElementsByClassName(select);
 		break;
-		case '#':
-			return document.getElementById(select);
+	case '#':
+		return document.getElementById(select);
 		break;
-		default:
-			return document.getElementsByTagName(code);
+	default:
+		return document.getElementsByTagName(code);
 		break;
 	}
 }
@@ -75,18 +75,18 @@ function $(code){
 function setup(){
 	$('#searchType').value = $('.type')[0].id;
 	afrom($('.vote')).forEach(function(vote){
-		vote.id = vote.getAttribute("article") + '_' + vote.getAttribute("vote");
-		vote.onclick = function(a){
+		vote.id = vote.getAttribute('article') + '_' + vote.getAttribute('vote');
+		vote.onclick = function(){
 			var vote = this;
-			var side = this.getAttribute("vote")
-			var article = this.getAttribute("article");
+			var side = this.getAttribute('vote');
+			var article = this.getAttribute('article');
 			if(vote.classList.contains('mark')){
 				getJson('vote',{
 					side: 'none',
 					article: article
 				},function(data){
 					if(!data.logined){
-						alert('Not logined')
+						alert('Not logined');
 						return ;
 					}
 					vote.classList.remove('mark');
@@ -99,17 +99,14 @@ function setup(){
 				article: article
 			},function(data){
 				if(!data.logined){
-					alert('Not logined')
+					alert('Not logined');
 					return ;
-				}
-				var votes = $('.vote');
-				var list = [];
-				
+				}				
 				$('#'+ article + '_' + (side == 'up' ? 'down' : 'up')).classList.remove('mark');
 				vote.classList.add('mark');
 			});
 			
-		}
+		};
 	});
 }
 
@@ -147,7 +144,7 @@ function addArticles(articles){
 		//voting part
 		var voting = createChild(row,'td');
 		function createVote(side){
-			var but = createChild(voting,'div')
+			var but = createChild(voting,'div');
 			but.innerHTML = side == 'up' ? '\u25B2' : '\u25BC';
 			but.className = 'vote' + (side == article.vote ? ' mark' : '');
 			but.setAttribute('article', article.id);
@@ -161,7 +158,7 @@ function addArticles(articles){
 		percent.className = 'percent';
 		createVote('down');
 		// article part
-		var doc = createChild(row,'td')
+		var doc = createChild(row,'td');
 		
 		//headline
 		var h3 = createChild(doc,'h3');
@@ -204,16 +201,15 @@ function getNews(){
 		if(req.status !== 200)return ;
 		lastPage = 1;
 		$('#articles').innerHTML = '';
-		addArticles(articles)
+		addArticles(articles);
 
 		window.history.pushState(null, null, '?' + req.params);
 	});	
 }
-try{
-	$('#sort').onchange = getNews;
-}catch(err){}
 
-window.onscroll = function(ev) {
+if($('#sort'))$('#sort').onchange = getNews;
+
+window.onscroll = function() {
 	if ((window.innerHeight + window.scrollY) < document.body.scrollHeight)return;
 	getJson('news',{
 		type: $('.type')[0].id,
@@ -223,6 +219,6 @@ window.onscroll = function(ev) {
 	},function(articles,req){
 		if(req.status !== 200)return ;
 		lastPage++;
-		addArticles(articles)
+		addArticles(articles);
 	});
-}
+};

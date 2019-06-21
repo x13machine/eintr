@@ -4,10 +4,11 @@ var dir = __dirname + '/templates/';
 global.templates = {
 	'none': function(){}
 };
+
 function load(){
 	var files = fs.readdirSync(dir);
 	files.forEach(function(file){
-			templates[file.split('.')[0]] = handlebars.compile(fs.readFileSync(dir + file,'utf8'));
+		templates[file.split('.')[0]] = handlebars.compile(fs.readFileSync(dir + file,'utf8'));
 	});
 }
 fsmonitor.watch(dir, null, load);
@@ -17,7 +18,7 @@ load();
 global.render = function(req,res,page,data){
 	
 	function dis(user){
-		var user = user || {};
+		user = user || {};
 		
 		function getFiles(list,type){
 			var compiled = [];
@@ -43,10 +44,10 @@ global.render = function(req,res,page,data){
 		return ;
 	}
 	
-	sql.query('SELECT "name" FROM "users" WHERE "ID" = $1::int', [req.user], function (err, re, fields) {
+	sql.query('SELECT "name" FROM "users" WHERE "ID" = $1::int', [req.user], function (err, re) {
 		if (err || !re.rows[0])dis();
 		else dis(re.rows[0]);
 	});
 	
 
-}
+};

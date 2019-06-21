@@ -4,14 +4,14 @@ global.fs = require('fs');
 global.config = require('./config.json');
 
 if(process.env.override)config = Object.assign(config,JSON.parse(process.env.override));
-if(process.env.config)config = Object.assign(config,config.override[process.env.config]);
+if(process.env.config)config = Object.asign(config,config.override[process.env.config]);
 
 
 process.env.NODE_ENV = 'production';
 
 global.htmlToText = require('html-to-text');
 
-global.redisLib = require("redis");
+global.redisLib = require('redis');
 global.redis = redisLib.createClient(config.redis);
 
 global.pg = require('pg');
@@ -40,17 +40,16 @@ passport.deserializeUser(function(obj, done) {
 
 passport.use(new GoogleStrategy(config.google,
 	function(token, tokenSecret, profile, done) {
-		var avatar = profile._json.image.url.split('?')[0] + '?sz=';
 		var displayName = profile.displayName.substr(0,60); //make sure it fits into database.
 		var email = profile.emails[0].value;
 
-		var query = sql.query('INSERT INTO "users" ("email","google", "name") VALUES ($1::text, $2::text, $3::text) ON CONFLICT ("email") DO UPDATE SET "name" = $3::text',[
+		sql.query('INSERT INTO "users" ("email","google", "name") VALUES ($1::text, $2::text, $3::text) ON CONFLICT ("email") DO UPDATE SET "name" = $3::text',[
 			email,
 			profile.id,
 			displayName
-		], function (err) {
+		], function () {
 			sql.query('SELECT "ID" FROM "users" WHERE "email" = $1::text', [email], function (err, res) {
-				var e = err || !res.rows[0]
+				var e = err || !res.rows[0];
 				if(e){
 					done(e,null);
 					return ;
@@ -69,13 +68,13 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
 var sessionMiddleware = session({
-    store: new RedisStore({
+	store: new RedisStore({
 		client: redis
 	}),
 	resave: true,
 	saveUninitialized: false,
-    secret: config.secret,
-    cookie: {
+	secret: config.secret,
+	cookie: {
 		maxAge: config.expire * 1000
 	}
 });
@@ -89,7 +88,7 @@ app.get('/auth/google/callback',passport.authenticate('google', {
 }));
 
 app.get('/logout',function(req,res){
-	req.session.destroy(function (err) {
+	req.session.destroy(function () {
 		res.redirect('/');
 	});
 });

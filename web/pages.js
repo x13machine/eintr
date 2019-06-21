@@ -20,7 +20,6 @@ app.get('/', function(req, res){
 });
 
 app.get('/about', function(req, res){
-		
 	render(req, res,'about', {
 		sources: sourcesArray
 	});
@@ -28,6 +27,5 @@ app.get('/about', function(req, res){
 
 
 app.get('/sidebar', function(req, res){
-		
 	render(req, res,'none', {});
 });

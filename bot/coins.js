@@ -22,8 +22,7 @@ function gra(){
 		var info = [];
 		var download = [];
 		var downloadID = {};
-		var info = [];
-		
+				
 		res.data.forEach(coin => {
 			download.push(coin.slug);
 			downloadID[coin.slug] = coin.id;
@@ -54,7 +53,7 @@ function gra(){
 						if(err || !image)return;
 						try{
 							image.resize(16, 16).write(config.coins + '/' + dat + '.png');
-						}catch(err){console.log(err)}
+						}catch(err){console.log(err);}
 					});
 				});
 			}

@@ -1,1 +1,1 @@
-require('./' + (process.env.mode || 'web') + '/server.js')
+require('./' + (process.env.mode || 'web') + '/server.js');
