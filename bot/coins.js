@@ -18,17 +18,12 @@ const requestOptions = {
 
 function gra(){
 	rp(requestOptions).then(res => {
-		
-		var info = [];
-		var download = [];
-		var downloadID = {};
-				
+		var info = [];				
 		res.data.forEach(coin => {
-			download.push(coin.slug);
-			downloadID[coin.slug] = coin.id;
 			
 			info.push({
 				id: coin.slug,
+				uid: coin.id,
 				name: coin.name,
 				change: coin.quote.USD.percent_change_24h.toFixed(2),
 				price: coin.quote.USD.price
@@ -37,29 +32,8 @@ function gra(){
 
 		redis.set('coins', JSON.stringify(info));
 		
-		fs.readdir(config.coins, function(err, files) {
-			if(err)return ;
-			files.forEach(function(file){
-				var name = file.split('.')[0];
-				var index = download.indexOf(name);
-				if(index > -1)download.splice(index, 1);
-			});
-			
-			if(download.length !== 0){
-				
-				download.forEach(function(dat){
-					jimp.read('https://s2.coinmarketcap.com/static/img/coins/16x16/' + downloadID[dat] + '.png', function (err, image) {
-
-						if(err || !image)return;
-						try{
-							image.resize(16, 16).write(config.coins + '/' + dat + '.png');
-						}catch(err){console.log(err);}
-					});
-				});
-			}
-		});
-	}).catch((err) =>{
-		console.log(err,'err');
+	}).catch(err =>{
+		console.log('coins',err);
 	});
 	setTimeout(gra,config.coinInterval * 1000);
 }

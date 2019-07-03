@@ -2,7 +2,7 @@
 <p>The goal of eintr news is to get reliable news. </p>
 <p>It's a news aggregator that grabs articles from a select group of news organizations.</p>
 <p>Then articles are ranked using a reddit like voting system.</p>
-<h2>What does 'eintr' mean and how do you pronounce it?</h2>
+<h2>What does "eintr" mean and how do you pronounce it?</h2>
 <p>
 	Eintr is a type of programming error. It's when a system call is interrupted.
 </p>
@@ -10,15 +10,12 @@
 	Here's how the espeak speech synthesizer pronounces it:
 </p>
 <audio controls>
-	<source src="/media/eintr.ogg">
+	<source src='/media/eintr.ogg'>
 </audio>
 
 <h2>What sources does eintr use?</h2>
-<p>
-	If you think I should add or remove a source, please join the <a href='https://discord.gg/v42HgA5' target='_blank'>discord</a> and tell me.
-</p>
 <ul class='sources'>
 {{#each sources}}
-	<li><a href='{{link}}'>{{name}}</a> - {{#ifCond type "==" "news"}}News{{/ifCond}}{{#ifCond type "==" "factcheck"}}Fact Check{{/ifCond}}</li>
+	<li><a href='{{link}}'>{{name}}</a> - {{#ifCond type '==' 'news'}}News{{/ifCond}}{{#ifCond type '==' 'factcheck'}}Fact Check{{/ifCond}}</li>
 {{/each}}
 </ul>

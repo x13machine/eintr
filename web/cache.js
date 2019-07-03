@@ -1,6 +1,9 @@
+const fs = require('fs');
+const crypto = require('crypto');
+var fsmonitor = require('fsmonitor');
 
-global.hashes = {};
-global.lookups = {};
+var hashes = {};
+var lookups = {};
 
 function cache(){
 	hashes = {};
@@ -11,10 +14,10 @@ function cache(){
 		'public/css'
 	];
 	
-	directories.forEach(function(dir){
+	directories.forEach(dir => {
 		dir = __dirname + '/' + dir;
 		var files = fs.readdirSync(dir);
-		files.forEach(function(file){
+		files.forEach(file => {
 			var content = fs.readFileSync(dir + '/' + file,'utf8');
 			var type = file.split('.')[1];
 				
@@ -32,7 +35,7 @@ function cache(){
 cache();
 fsmonitor.watch(__dirname + '/public/', null, cache);
 
-app.get('/cache/*', function(req, res, next){
+app.get('/cache/*', (req, res, next) => {
 	var data = hashes[req.url.split('/')[2]];
 	if(!data){
 		next();
@@ -42,3 +45,7 @@ app.get('/cache/*', function(req, res, next){
 	res.set('Content-Type', data.type);
 	res.end(data.content);
 });
+
+module.exports = {
+	lookups: lookups
+};

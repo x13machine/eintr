@@ -18,7 +18,7 @@ function decodeJson(str){
 function getJsonFromUrl() {
 	var query = location.search.substr(1);
 	var result = {};
-	query.split('&').forEach(function(part) {
+	query.split('&').forEach((part) => {
 		var item = part.split('=');
 		result[item[0]] = decodeURIComponent(item[1]).replace(/\++/g, ' ');
 	});
@@ -28,26 +28,28 @@ function getJsonFromUrl() {
 var par = getJsonFromUrl();
 $('#searchInput').value = par.q || '';
 
-function getJson(action,obj,callback) {	
+function getJson(action, obj, callback) {	
 	var par = [];
+	obj['_csrf'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 	for(var p in obj){
 		if(obj[p] !== undefined)par.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
 	}
-	
+
 	var params = par.join('&');
 	
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if(this.readyState != XMLHttpRequest.DONE)return ;
 		this.params = params;
-		(callback || function(){})(decodeJson(this.responseText),this);
+		(callback || (() => {}))(decodeJson(this.responseText),this);
 	};
 	
-	xhttp.open('GET', '/ajax/' + action + '?' + params, true);
-	xhttp.send();
+	xhttp.open('POST', '/ajax/' + action, true);
+	xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhttp.send(params);
 }
 
-String.prototype.encodeHTML = function () {
+String.prototype.encodeHTML =  function() {
 	return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 };
 
@@ -62,21 +64,18 @@ function $(code){
 	switch(code[0]){
 	case '.':
 		return document.getElementsByClassName(select);
-		break;
 	case '#':
 		return document.getElementById(select);
-		break;
 	default:
 		return document.getElementsByTagName(code);
-		break;
 	}
 }
 
 function setup(){
 	$('#searchType').value = $('.type')[0].id;
-	afrom($('.vote')).forEach(function(vote){
+	afrom($('.vote')).forEach(vote => {
 		vote.id = vote.getAttribute('article') + '_' + vote.getAttribute('vote');
-		vote.onclick = function(){
+		vote.onclick = function() {
 			var vote = this;
 			var side = this.getAttribute('vote');
 			var article = this.getAttribute('article');
@@ -84,7 +83,7 @@ function setup(){
 				getJson('vote',{
 					side: 'none',
 					article: article
-				},function(data){
+				},data => {
 					if(!data.logined){
 						alert('Not logined');
 						return ;
@@ -97,7 +96,7 @@ function setup(){
 			getJson('vote',{
 				side: side,
 				article: article
-			},function(data){
+			},data => {
 				if(!data.logined){
 					alert('Not logined');
 					return ;
@@ -112,20 +111,19 @@ function setup(){
 
 setup();
 
-afrom($('.types')).forEach(function(span){
+afrom($('.types')).forEach(span => {
 	function tc(){
-		afrom($('.types')).forEach(function(span){
+		afrom($('.types')).forEach(span => {
 			span.classList.remove('type');
 		});
 		
 		this.classList.add('type');
 		getNews();	
 	}
-	//span.addEventListener("touchstart", tc, false);
 	span.onclick = tc;
 });
 
-afrom($('.articles')).forEach(function(article){
+afrom($('.articles')).forEach(article => {
 	var d = new Date(article.title);
 	article.title = d.toDateString() + ', ' + d.toLocaleTimeString();
 });
@@ -133,7 +131,7 @@ afrom($('.articles')).forEach(function(article){
 function addArticles(articles){
 
 	var parent = $('#articles');
-	articles.forEach(function(article){
+	articles.forEach(article => {
 		var d = new Date(article.date);
 		//table setup
 		var table = createChild(parent,'table');
@@ -197,7 +195,7 @@ function getNews(){
 		sort: ($('#sort') || {}).value,
 		type: $('.type')[0].id,
 		q: par.q
-	},function(articles,req){
+	},(articles,req) => {
 		if(req.status !== 200)return ;
 		lastPage = 1;
 		$('#articles').innerHTML = '';
@@ -210,13 +208,15 @@ function getNews(){
 if($('#sort'))$('#sort').onchange = getNews;
 
 window.onscroll = function() {
-	if ((window.innerHeight + window.scrollY) < document.body.scrollHeight)return;
+	var d = document.documentElement;
+	if(d.scrollTop + window.innerHeight < d.offsetHeight) return ;
+
 	getJson('news',{
 		type: $('.type')[0].id,
 		sort: ($('#sort') || {}).value,
 		q: par.q,
 		page: lastPage + 1,
-	},function(articles,req){
+	},(articles,req) => {
 		if(req.status !== 200)return ;
 		lastPage++;
 		addArticles(articles);

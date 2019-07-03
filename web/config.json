@@ -22,12 +22,6 @@
 		"clientID":"",
 		"callbackURL": "/auth/google/callback"
 	},
-	"pg":{
-		"host": "localhost",
-		"user" : "postgres",
-		"password": "pass",
-		"database": "eintr"
-	},
 	"media":{
 		"index":{
 			"css":[],

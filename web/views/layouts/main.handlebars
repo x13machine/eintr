@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Eintr News</title>
+		<meta name='description' content='Eintr News'>
+		<meta charset='utf-8'>
+		<meta name='csrf-token' content='{{csrfToken}}'>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+		<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.1/css/all.css' integrity='sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP' crossorigin='anonymous'>
+		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+		{{#each css}}
+			<link rel='stylesheet' href='/cache/{{this}}'>
+		{{/each}}
+	</head>
+	<body>
+		<div id='header'>
+			<div id='login'>
+				{{#if logined}}
+					Hello, {{name}}!<br>
+					<form method='post' action='/logout' class='inline'>
+					<input type='hidden' name='_csrf' value='{{csrfToken}}'>
+					<button type='submit' name='submit_param' value='submit_value' class='link-button'>
+						Logout
+					</button>
+					</form>
+				{{else}}
+					<a href='/auth/google' class='account'><div>Sign In with Google</div></a>
+				{{/if}}
+			</div>
+			<div id='title'>
+				<h1>Eintr News</h1>
+				<p>News Aggregation</p>
+			</div>
+			<ul id='nav'>
+				<li><a{{#ifCond page '==' 'index'}} id='select'{{/ifCond}} href='/' class='links'>News</a></li>
+				<li><a{{#ifCond page '==' 'about'}} id='select'{{/ifCond}} href='/about' class='links'>About</a></li>				
+			</ul>
+		</div>
+		<div class='container-fluid'>
+			<div id='body' class='row'>
+			
+				<div id='content' class='col-md-9 col-sm-12'>
+					{{{body}}}
+				</div>
+				<div id='sidebar' class='d-none d-md-block col-md-3'>
+					<form action='/'>
+						<input name='q' id='searchInput' placeholder='Search...'>
+						<input type='hidden' name='type' id='searchType'>
+						<i className='fas fa-search'></i>
+						<button type='submit' className='btn btn-primary m-0' id='searchButton'><i class="fa fa-search" aria-hidden="true"></i></button>
+					</form>
+					<hr>
+					<h2><a href='https://coinmarketcap.com' target='_blank'>Cryptocurrencies</a></h2>
+					<table id='coins'>
+						<tr>
+							<th>
+								Name
+							</td>
+							<th>
+								Price
+							</th>
+							<th>Movement</th>
+						</tr>
+						{{#each coins}}
+						<tr>
+							<td>
+								<img class='coin-icon' src='https://s2.coinmarketcap.com/static/img/coins/32x32/{{uid}}.png'>
+								<a href='https://coinmarketcap.com/currencies/{{id}}' target='_blank'>{{name}}</a>
+							</td>
+							<td>
+								{{price}}
+							</td>
+							<td style='color: {{color}}'>{{change}}</td>
+						</tr>
+						{{/each}}
+					</table>
+					<hr>
+					<h2><a href='https://skeptics.stackexchange.com' target='_blank'>Skeptics - Stack Exchange</a></h2>
+					<ul>
+						{{#each skeptics}}
+							<li><a href='{{link}}' target='_blank'>{{title}}</a></li>
+						{{/each}}
+					</ul>
+					<hr>
+
+				</div>
+			</div>
+		
+		</div>
+
+		<script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
+		
+		{{#each js}}
+			<script src='/cache/{{this}}'></script>
+		{{/each}}
+	</body>
+</html>

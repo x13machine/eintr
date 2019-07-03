@@ -1,6 +1,5 @@
 global.crypto = require('crypto');
 global.fs = require('fs');
-global.cj = require('comment-json');
 global.feed = require('simple-feedreader');
 global.jimp = require('jimp');
 global.unfluff = require('unfluff');
@@ -17,10 +16,9 @@ global.sources = require('./sources.json');
 if(process.env.override)config = Object.assign(config, JSON.parse(process.env.override));
 if(process.env.config)config = Object.assign(config, config.override[process.env.config]);
 
-global.pg = require('pg');
-global.sql = new pg.Pool(config.pg);
-
 global.redis = redisLib.createClient(config.redis);
+
+const models = require('../shared/models');
 
 require('./functions.js');
 require('./articles.js');
@@ -32,21 +30,30 @@ function grab(source,slug){
 	
 	function done(){
 		console.log('done', slug);
-		sql.query('SELECT "hash" FROM "articles" WHERE "hash" = ANY($1::text[])',[Object.keys(articles).concat([''])], function (err, res) {
-			if(err){
-				console.log(err);
-				res.rows = [];
-			}
-			
-			res.rows.forEach(function(row){
-				delete articles[row.hash];
-			});
-			
-			getArticle(articles,0,function(){
-				setTimeout(function(){
+
+		function articlesLoop(){
+			getArticle(articles,0,() => {
+				setTimeout(() => {
 					grab(source,slug);	
 				},config.interval * 1000);
 			});
+		}
+		models.articles.findAll({
+			attributes : ['hash'],
+			where: {
+				hash: {
+					[models.op.any]: Object.keys(articles).concat([''])
+				}
+			}
+		}).then(rows => {
+			rows.forEach(row => {
+				delete articles[row.hash];
+			});
+			
+			articlesLoop();
+		}).catch((err) => {
+			console.log(err);
+			articlesLoop();
 		});
 		
 	}
@@ -58,13 +65,13 @@ function grab(source,slug){
 		}
 		
 		console.log(slug,z);
-		feed(source.rss[z], function(err, items) {
+		feed(source.rss[z], (err, items) => {
 			if(err){
 				console.log(slug,source.rss[z],err);
 				return ;
 			}
 
-			items.forEach(function(item){
+			items.forEach((item) => {
 				if(!item.guid){
 					return;
 				}
@@ -93,7 +100,7 @@ function grab(source,slug){
 			});
 
 			
-			setTimeout(function(){
+			setTimeout(() => {
 				rss(z + 1);
 			},config.delay);
 		});

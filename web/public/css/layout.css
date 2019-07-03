@@ -6,6 +6,9 @@ body, html{
 	color: #AAA;
 }
 
+.container{
+	background: #222;
+}
 a{
 	color: #999999;
 }
@@ -83,29 +86,12 @@ a:hover{
 
 /* body / content */
 
-#ad{
-	margin: auto;
-	background: #000;
-	width: 728px;
-	height: 90px;
+.container-fluid{
+	margin-top: 10pt;
 }
 
 #select{
 	color: #006FFF !important;
-}
-
-#body{
-	float: right;
-	width: 100%;
-}
-
-#body>div{
-	float: left;
-}
-
-#content{
-	margin: 5pt;
-	width: calc(100% - 10pt - 10pt - 300pt);
 }
 
 .sidebarLink{
@@ -115,18 +101,6 @@ a:hover{
 @media (max-width:700pt) {
 	#header{
 		background: none;
-	}
-	
-	#sidebar{
-		display:none
-	}
-	
-	#content{
-		width: calc(100% - 10pt);
-	}
-	
-	.expand-sidebar{
-		width: 0 !important;
 	}
 
 	.sidebarLink{
@@ -138,12 +112,20 @@ a:hover{
 
 /* sidebar */
 
-.expand-sidebar{
-	width: 100% !important;
-	margin: 0 !important;
-	display: block !important;
+#searchButton{
+	background-color: Transparent;
+	background-repeat:no-repeat;
+	border: none;
+	cursor:pointer;
+	overflow: hidden;
+	color: #FFF;
+	font-size: 15pt;
+	outline:none;
 }
 
+#searchButton:hover{
+	color: #AAA;
+}
 #searchInput{
 	background: rgba(0,0,0,0.5);
 	color: #FFF;
@@ -151,19 +133,6 @@ a:hover{
 	width: calc(100% - 3em);
 	padding: 4px;
 	font-size: 1em;
-}
-
-#searchButton{
-	background: url(/imgs/search.svg);
-	background-size: 100% 100%;
-	cursor: pointer;
-	border: 0;
-	padding: 1em;
-}
-
-#sidebar{
-	margin: 5pt;
-	width: 300pt;
 }
 
 #sidebar ul{
@@ -352,3 +321,26 @@ h2,h3 a,h3{
 .thumbnail{
 	padding-right: 5pt !important;
 }
+
+.inline {
+  display: inline;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: serif;
+}
+
+.link-button:focus {
+  outline: none;
+}
+
+.link-button:active {
+  color:red;
+}
+

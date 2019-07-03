@@ -1,4 +1,6 @@
 var sidebar = {};
+module.exports = sidebar;
+
 function addZeroes( num ) {
 	num = num.toString();
 	var value = Number(num);
@@ -12,25 +14,22 @@ function addZeroes( num ) {
 	}
 	return num;
 }
-function build(){
-	global.sidebarHTML = templates.sidebar(sidebar);
-}
 
 function getData(){
 
-	redis.get('stack',function(err,data){
+	redis.get('stack', (err,data) => {
 		var questions = JSON.parse(data || '[]');
 		for(var i in questions){
 			questions[i].title = decodeHTML(questions[i].title);
 		}
+
 		sidebar.skeptics = questions;
-		build();
 	});
 	
-	redis.get('coins',function(err,data){
+	redis.get('coins', (err,data) => {
 		var coins = JSON.parse(data || '[]');
 		var max = 0;
-		coins.forEach(function(coin,i){
+		coins.forEach((coin,i) => {
 			coins[i].price = '$' + comma(addZeroes(round(coin.price)));
 			if(0 < coin.change){
 				coins[i].icon = '\u25B2 ';
@@ -47,7 +46,7 @@ function getData(){
 			max = Math.max(max, coins[i].change.length);
 		});
 		
-		coins.forEach(function(coin,i){
+		coins.forEach((coin,i) => {
 			while(coin.change.length < max){
 				coin.change = ' ' + coin.change;
 			}
@@ -56,7 +55,6 @@ function getData(){
 		});
 		
 		sidebar.coins = coins;
-		build();
 	});
 	setTimeout(getData, 5000);
 }

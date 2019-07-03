@@ -1,9 +1,10 @@
+const htmlToText = require('html-to-text');
 
-String.prototype.Replace = function(a,b){
+String.prototype.Replace = function(a,b) {
 	return this.split(a || ',').join(b || '');
 };
 
-handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+global.ifCond = (v1, operator, v2, options) => {
 
 	switch (operator) {
 	case '==':
@@ -29,9 +30,9 @@ handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 	default:
 		return options.inverse(this);
 	}
-});
+};
 
-global.decodeHTML = function(str){
+global.decodeHTML = str => {
 	return htmlToText.fromString(str,{
 		wordwrap: null,
 		ignoreHref: true,
@@ -39,19 +40,19 @@ global.decodeHTML = function(str){
 	}).Replace('&apos;','\'').Replace('&quot;','"').Replace('&amp;','&');
 };
 
-global.comma = function(x){
+global.comma = x => {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-global.round = function(x){
+global.round = x => {
 	return Math.round(x * 100) / 100;	
 };
 
-global.base = function(str){
+global.base = str => {
 	return str.Replace('+','-').Replace('/','_').Replace('=').substr(0,15);
 };
 
-String.prototype.removeWhiteSpace = function(){
+String.prototype.removeWhiteSpace = function() {
 	var str = this;
 	var last = '';
 	while(last !== str){
@@ -61,7 +62,7 @@ String.prototype.removeWhiteSpace = function(){
 	return str;
 };
 
-global.summary = function(str,max){
+global.summary = (str,max) => {
 	var sum = [];
 	var len = 0;
 	var parts = str.Replace('\n',' ').split(' ');
@@ -74,7 +75,7 @@ global.summary = function(str,max){
 	return sum.join(' ');
 };
 
-global.summary2 = function(str,max){
+global.summary2 = (str,max) => {
 	var sum = [];
 	var len = 0;
 	var parts = ss.split(str);
@@ -91,7 +92,7 @@ global.summary2 = function(str,max){
 	return sum.join(' ');
 };
 
-global.json = function(str){
+global.json = str => {
 	try{
 		return JSON.parse(str);
 	}catch(err){
