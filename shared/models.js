@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-console.log(config.db);
 const sequelize = new Sequelize(config.db,Object.assign({
 	logging: false
 },config.dbConfig || {}));
