@@ -1,5 +1,5 @@
 # Eintr News Aggregator
-Source Code for the a news aggregator I made a year ago. The rss reader might be buggy.
+Source Code for the a news aggregator I made a year ago.
 
 ## Install
 * First, You need to install redis, postgres.
