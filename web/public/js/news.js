@@ -79,7 +79,7 @@ function setup(){
 			var vote = this;
 			var side = this.getAttribute('vote');
 			var article = this.getAttribute('article');
-			if(vote.classList.contains('mark')){
+			if(vote.classList.contains('marked')){
 				getJson('vote',{
 					side: 'none',
 					article: article
@@ -88,7 +88,7 @@ function setup(){
 						alert('Not logined');
 						return ;
 					}
-					vote.classList.remove('mark');
+					vote.classList.remove('marked');
 				});
 				return ;
 			}
@@ -101,8 +101,8 @@ function setup(){
 					alert('Not logined');
 					return ;
 				}				
-				$('#'+ article + '_' + (side == 'up' ? 'down' : 'up')).classList.remove('mark');
-				vote.classList.add('mark');
+				$('#'+ article + '_' + (side == 'up' ? 'down' : 'up')).classList.remove('marked');
+				vote.classList.add('marked');
 			});
 			
 		};
@@ -144,7 +144,7 @@ function addArticles(articles){
 		function createVote(side){
 			var but = createChild(voting,'div');
 			but.innerHTML = side == 'up' ? '\u25B2' : '\u25BC';
-			but.className = 'vote' + (side == article.vote ? ' mark' : '');
+			but.className = 'vote' + (side == article.vote ? ' marked' : '');
 			but.setAttribute('article', article.id);
 			but.setAttribute('vote', side);
 		}

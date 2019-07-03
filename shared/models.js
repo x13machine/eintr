@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize(config.db,{
+const sequelize = new Sequelize(config.db,Object.assign({
 	logging: false
-});
+},config.dbConfig || {}));
 
 const articles = require('./models/articles')(sequelize, Sequelize.DataTypes);
 const images = require('./models/images')(sequelize, Sequelize.DataTypes);

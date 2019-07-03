@@ -6,7 +6,6 @@ app.post('/ajax/vote', (req, res) => {
 	var article = req.body['article'] || '';
 	var side = req.body['side'] || '';
 	if(!req.user || !Number.isInteger(article * 1))return;
-
 	if(side === 'none'){
 		models.votes.destroy({
 			where: {

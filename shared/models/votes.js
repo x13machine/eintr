@@ -8,13 +8,11 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		article: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
-			unique: true
+			allowNull: false
 		},
 		user: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
-			primaryKey: true
+			allowNull: false
 		},
 		vote: {
 			type: DataTypes.BOOLEAN,
@@ -24,8 +22,9 @@ module.exports = (sequelize, DataTypes) => {
 		tableName: 'votes',
 		indexes: [
 			{
-				unique: true,
-				fields: ['user', 'article']
+				name: 'user_article',
+				fields: ['user', 'article'],
+				unique: true
 			}
 		]
 	});

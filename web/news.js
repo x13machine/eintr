@@ -140,9 +140,9 @@ global.getNews = (options, callback) => {
 		models.votes.findAll({
 			attributes: ['vote','article'],
 			where: {
-				article: list
+				article: list,
+				user: options.id
 			},
-			user: options.id
 		}).then(rows => {
 			rows.forEach(row => {
 				articles.every((article,i) => {
