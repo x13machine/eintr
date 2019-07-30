@@ -40,9 +40,9 @@ global.getArticle = (articles,index,callback) => {
 						models.images.create({
 							url: sha,
 							hash:  crypto.createHash('sha256').update(buff).digest('base64')
-						}).then(image => {							
-							img.write(config.save + '/' + image.id + '.jpg');
-							callback(image.id);
+						}).then((image) => {
+							img.write(config.save + '/' + image.ID + '.jpg');
+							callback(image.ID);
 						});
 					}).catch(err =>{	
 						console.log(err);
