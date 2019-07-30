@@ -51,7 +51,7 @@ function grab(source,slug){
 			});
 			
 			articlesLoop();
-		}).catch((err) => {
+		}).catch(err => {
 			console.log(err);
 			articlesLoop();
 		});

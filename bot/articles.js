@@ -43,7 +43,7 @@ global.getArticle = (articles,index,callback) => {
 						}).then((image) => {
 							img.write(config.save + '/' + image.ID + '.jpg');
 							callback(image.ID);
-						});
+						}).catch(() => callback(null));
 					}).catch(err =>{	
 						console.log(err);
 						callback(null);
