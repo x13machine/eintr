@@ -24,7 +24,7 @@
     "redis": "2.7.x",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
-    "sequelize": "^5.8.12",
+    "sequelize": "^5.15.1",
     "simple-feedreader": "latest",
     "stackexchange-node": "1.0.1",
     "unfluff": "^3.2.0"
