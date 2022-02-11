@@ -9,7 +9,7 @@
     "csurf": "^1.10.0",
     "eslint": "^5.16.0",
     "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
+    "express-handlebars": "^5.3.1",
     "express-session": "^1.16.2",
     "fsmonitor": "0.2.4",
     "get-urls": "7.0.0",
